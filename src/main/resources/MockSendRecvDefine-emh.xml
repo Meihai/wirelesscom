@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <declare>
+    <section name="dynamicKeySection" id="唯一标志" len="特征值byte长度" remark="用来存储特征值，比如设备地址，send里面不做解析，recv里面直接返回"/>
+    <section name="commonConstSection" valueString="十六进制字符串" remark="返回十六进制数组，长度不定"/>
+    <section name="duplicateConstSection" valueString="十六进制字符串" len="长度" remark="返回十六进制数组，长度是len，重复多次valuestring的len"/>
+    <section name="byteRangeSection" min="最小值，可达" max="最大值，不可达" remark="返回十六进制数组，长度1"/>
+    <section name="ushortRangeSection" min="最小值，可达" max="最大值，不可达" order="1：高位在前, 2：低位在前" remark="返回十六进制数组，长度2"/>
+    <section name="modbusCrcSection" order="crc校验码高低位在前标志，1：高位在前, 2：低位在前" remark="返回modbus crc校验码，长度2"/>
+  </declare>
+  <servers>
+    <server>
+      <udpParam>
+        <IP>localhost</IP>
+        <port>6001</port>
+      </udpParam>
+      <frames>
+		<frame desc="EMH-DI-8-111">
+          <sendFrame>
+            <commonConstSection valueString="01 01 00 08 00 6f fd e4"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="01 01 0E EF 37 00 00 00 00 00 00 00 00 00 00 00 62 4B 05"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="EMH-DI-119-75">
+          <sendFrame>
+            <commonConstSection valueString="01 01 00 77 00 4b cc 27"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="01 01 0A 00 00 00 00 00 00 00 00 00 00 DD 71"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="EMH-AI-8-34">
+          <sendFrame>
+            <commonConstSection valueString="01 03 00 08 00 22 44 11"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="01 03 44 09 E8 1F C1 0A 2F 1F B1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 32 00 00 00 00 00 00 10 EB"></commonConstSection>
+          </recvFrame>
+        </frame>
+      </frames>
+    </server>
+  </servers>
+</config>

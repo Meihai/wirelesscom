@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <declare>
+        <section name="dynamicKeySection" id="唯一标志" len="特征值byte长度" remark="用来存储特征值，比如设备地址，send里面不做解析，recv里面直接返回"/>
+        <section name="commonConstSection" valueString="十六进制字符串" remark="返回十六进制数组，长度不定"/>
+        <section name="duplicateConstSection" valueString="十六进制字符串" len="长度" remark="返回十六进制数组，长度是len，重复多次valuestring的len"/>
+        <section name="byteRangeSection" min="最小值，可达" max="最大值，不可达" remark="返回十六进制数组，长度1"/>
+        <section name="ushortRangeSection" min="最小值，可达" max="最大值，不可达" order="1：高位在前, 2：低位在前" remark="返回十六进制数组，长度2"/>
+        <section name="modbusCrcSection" order="crc校验码高低位在前标志，1：高位在前, 2：低位在前" remark="返回modbus crc校验码，长度2"/>
+    </declare>
+    <servers>
+        <server>
+            <udpParam>
+                <IP>localhost</IP>
+                <port>6001</port>
+            </udpParam>
+            <frames>
+                <frame desc="EMH-DI-8-111">
+                    <sendFrame>
+                        <commonConstSection valueString="0102 0000 0005 55aa"></commonConstSection>
+                    </sendFrame>
+                    <recvFrame>
+                        <commonConstSection valueString="01 02 01 00 A1 88"></commonConstSection>
+                    </recvFrame>
+                </frame>
+
+                <frame desc="EMH-DI-9-121">
+                        <sendFrame>
+                            <commonConstSection valueString="0103 0020 0006 55AA"></commonConstSection>
+                        </sendFrame>
+                        <recvFrame>
+                             <commonConstSection valueString="01 03 0C 00 00 00 00 00 00 00 00 00 00 00 00 93 70"></commonConstSection>
+                        </recvFrame>
+                </frame>
+            </frames>
+        </server>
+    </servers>
+</config>

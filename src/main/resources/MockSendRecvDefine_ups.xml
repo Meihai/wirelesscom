@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <declare>
+    <section name="dynamicKeySection" id="唯一标志" len="特征值byte长度" remark="用来存储特征值，比如设备地址，send里面不做解析，recv里面直接返回"/>
+    <section name="commonConstSection" valueString="十六进制字符串" remark="返回十六进制数组，长度不定"/>
+    <section name="duplicateConstSection" valueString="十六进制字符串" len="长度" remark="返回十六进制数组，长度是len，重复多次valuestring的len"/>
+    <section name="byteRangeSection" min="最小值，可达" max="最大值，不可达" remark="返回十六进制数组，长度1"/>
+    <section name="ushortRangeSection" min="最小值，可达" max="最大值，不可达" order="1：高位在前, 2：低位在前" remark="返回十六进制数组，长度2"/>
+    <section name="modbusCrcSection" order="crc校验码高低位在前标志，1：高位在前, 2：低位在前" remark="返回modbus crc校验码，长度2"/>
+  </declare>
+  <servers>
+    <server>
+      <udpParam>
+        <IP>localhost</IP>
+        <port>6001</port>
+      </udpParam>
+      <frames>
+		<frame desc="00001">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 34 31 30 30 30 30 46 44 41 36 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 30 30 30 36 41 30 30 30 31 30 30 30 30 37 33 34 33 30 30 30 30 37 34 34 33 30 30 30 30 37 34 34 33 30 30 30 30 35 46 34 33 30 30 30 30 35 45 34 33 30 30 30 30 35 45 34 33 39 41 39 39 44 39 33 46 39 41 39 39 44 39 33 46 43 44 43 43 34 43 33 46 30 30 30 30 38 38 34 33 42 38 31 45 34 38 34 32 30 30 30 30 30 31 30 30 38 30 38 37 34 33 45 37 36 31 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00002">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 38 30 30 30 30 30 46 44 41 33 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 30 36 30 36 34 30 30 30 33 30 30 30 30 37 31 34 33 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 43 44 43 43 34 37 34 32 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 30 30 30 30 30 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 45 45 45 42 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00003">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 38 31 30 30 30 30 46 44 41 32 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 30 36 30 36 34 30 30 30 31 30 30 30 30 37 34 34 33 30 30 30 30 37 34 34 33 30 30 30 30 37 35 34 33 37 42 31 34 34 38 34 32 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 30 30 30 30 38 30 33 46 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 45 44 44 32 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00004">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 38 32 45 30 30 32 30 31 46 44 32 39 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 34 30 30 30 30 46 44 41 37 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00005">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 38 35 30 30 30 30 46 44 39 45 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 34 30 30 30 30 46 44 41 37 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00006">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 34 33 30 30 30 30 46 44 41 34 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 30 37 30 31 38 30 30 30 31 30 31 30 38 45 30 45 31 20 20 20 20 20 20 20 20 45 31 20 20 46 39 37 30 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00007">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 34 34 30 30 30 30 46 44 41 33 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 30 39 30 33 34 30 30 30 31 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 44 20 20 30 30 30 30 20 20 30 30 20 20 30 30 30 30 30 30 20 20 20 20 30 30 30 30 20 20 30 30 20 20 46 34 41 36 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00008">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 38 33 45 30 30 32 30 31 46 44 32 38 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 34 30 30 30 30 46 44 41 37 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		<frame desc="00009">
+          <sendFrame>
+            <commonConstSection valueString="7e 31 30 30 31 32 41 34 46 45 30 30 32 30 30 46 44 31 41 0d"></commonConstSection>
+          </sendFrame>
+          <recvFrame>
+            <commonConstSection valueString="7E 31 30 30 31 32 41 30 30 30 30 30 30 46 44 41 42 0D"></commonConstSection>
+          </recvFrame>
+        </frame>
+		</frames>
+    </server>
+  </servers>
+</config>
