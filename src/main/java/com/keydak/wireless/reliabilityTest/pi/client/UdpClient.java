@@ -2,7 +2,6 @@ package com.keydak.wireless.reliabilityTest.pi.client;
 
 import com.keydak.parser.Frame;
 import com.keydak.util.HexUtil;
-import com.keydak.wireless.udp.UdpMultiThreadTest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -11,10 +10,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-
 import java.net.InetSocketAddress;
-
-
 /**
  * Created by admin on 2017/3/22.
  */
@@ -29,18 +25,28 @@ public class UdpClient {
             //绑定端口 若为0 可为任意端口 9990
             Channel ch = b.bind(9990).sync().channel();
             byte[] hexByte= HexUtil.hexStringToByte(sendRecvFrame.getSendFrame());
+            //startTime
+            UdpMThreadClient.startTime=System.currentTimeMillis();
+            UdpMThreadClient.fileWriter.write(UdpMThreadClient.startTime+",");
+            System.out.println("起始时间为:"+ UdpMThreadClient.startTime);
             ch.writeAndFlush(
                     new DatagramPacket(Unpooled.copiedBuffer(hexByte), new InetSocketAddress(
                                 hostName, port))).sync();
-//                    new DatagramPacket(Unpooled.copiedBuffer("AT+CIPSEND=,\"192.168.1.165\",5",
-//                            CharsetUtil.UTF_8), new InetSocketAddress(
-//                            hostName, port))).sync();
-            UdpMultiThreadTest.sendCommandCount++;
-            if (!ch.closeFuture().await(15000)) {  //等待15秒
-                    UdpMultiThreadTest.errorReceiveCount++;
-                    System.out.println("等待超时");
-                    System.out.println("目前的误包数为:"+ UdpMultiThreadTest.errorReceiveCount);
-                }
+            UdpMThreadClient.sendCommandCount++;
+            if (!ch.closeFuture().await(500)) {  //超时时间设置为500ms
+                UdpMThreadClient.errorReceiveCount++;
+                System.out.println("等待超时");
+                System.out.println("目前的误包数为:"+ UdpMThreadClient.errorReceiveCount);
+                UdpMThreadClient.endTime=System.currentTimeMillis();
+                UdpMThreadClient.fileWriter.write(sendRecvFrame.getSendFrame()+",");//发送数据
+                UdpMThreadClient.fileWriter.write(UdpMThreadClient.endTime+",");//接收数据时间戳
+                UdpMThreadClient.fileWriter.write("timeout"+",");//接收数据
+                UdpMThreadClient.fileWriter.write(UdpMThreadClient.errorReceiveCount+",");//错误个数
+                UdpMThreadClient.fileWriter.write(UdpMThreadClient.sendCommandCount+","); //发送总数
+                UdpMThreadClient.fileWriter.write((UdpMThreadClient.endTime-UdpMThreadClient.startTime)+","); //响应时间
+                UdpMThreadClient.fileWriter.write("2s\r\n"); //发送数据时间间隔
+                UdpMThreadClient.fileWriter.flush();
+            }
         } finally {
             group.shutdownGracefully();
         }

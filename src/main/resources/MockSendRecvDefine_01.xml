@@ -23,7 +23,7 @@
                         <commonConstSection valueString="01 02 01 00 A1 88"></commonConstSection>
                     </recvFrame>
                 </frame>
-
+                <!--
                 <frame desc="EMH-DI-9-121">
                         <sendFrame>
                             <commonConstSection valueString="0103 0020 0006 55AA"></commonConstSection>
@@ -32,6 +32,7 @@
                              <commonConstSection valueString="01 03 0C 00 00 00 00 00 00 00 00 00 00 00 00 93 70"></commonConstSection>
                         </recvFrame>
                 </frame>
+                -->
             </frames>
         </server>
     </servers>
